@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Preview Banner Fucamp</title>
+    <!-- CSS Tách Biệt Để Gắn Vào Web Chính (Vanilla CSS) -->
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;800;900&display=swap');
+
+        /* Khối CSS của Banner - Copy phần này */
+        .fucamp-embed-banner {
+            font-family: 'Be Vietnam Pro', sans-serif;
+            position: relative;
+            width: 100%;
+            /* max-width set to let it fit into any container cleanly */
+            margin: 0 auto;
+            border-radius: 24px;
+            overflow: hidden;
+            background-color: #0a0f0b;
+            box-shadow: 0 25px 50px -12px rgba(23, 106, 33, 0.25);
+            display: flex;
+            flex-direction: column;
+            color: #fff;
+            text-decoration: none;
+        }
+
+        /* Container Desktop */
+        @media (min-width: 800px) {
+            .fucamp-embed-banner {
+                flex-direction: row;
+                align-items: center;
+                min-height: 320px;
+            }
+        }
+
+        .fucamp-embed-banner * {
+            box-sizing: border-box;
+        }
+
+        .fucamp-eb-bg {
+            position: absolute;
+            inset: 0;
+            z-index: 0;
+        }
+
+        .fucamp-eb-bg img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center 30%;
+            transition: transform 1s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .fucamp-embed-banner:hover .fucamp-eb-bg img {
+            transform: scale(1.05); /* Hiệu ứng phình to mượt mà khi hover */
+        }
+
+        .fucamp-eb-overlay {
+            position: absolute;
+            inset: 0;
+            /* Gradient pha trộn màu Dark green (#025d16) sang đen để làm nổi bật text */
+            background: linear-gradient(135deg, rgba(10, 15, 11, 0.95) 0%, rgba(23, 106, 33, 0.85) 40%, rgba(23, 106, 33, 0.2) 100%);
+        }
+
+        .fucamp-eb-content {
+            position: relative;
+            z-index: 10;
+            padding: 32px 24px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 100%;
+            height: 100%;
+        }
+
+        @media (min-width: 800px) {
+            .fucamp-eb-content {
+                flex-direction: row;
+                align-items: center;
+                padding: 48px 64px;
+            }
+        }
+
+        .fucamp-eb-text {
+            flex: 1;
+            max-width: 650px;
+        }
+
+        .fucamp-eb-badge {
+            display: inline-block;
+            padding: 6px 16px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 99px;
+            font-size: 12px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-bottom: 16px;
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px); /* Cho Safari */
+            color: #d1ffc8;
+        }
+
+        .fucamp-eb-title {
+            font-size: 32px;
+            font-weight: 900;
+            line-height: 1.2;
+            margin: 0 0 12px 0;
+            color: #ffffff;
+            letter-spacing: -0.5px;
+        }
+
+        @media (min-width: 800px) {
+            .fucamp-eb-title {
+                font-size: 46px;
+            }
+        }
+
+        .fucamp-eb-title span {
+            color: #9df197; /* Trùng màu highlight của site gốc */
+        }
+
+        .fucamp-eb-desc {
+            font-size: 16px;
+            line-height: 1.6;
+            color: rgba(255, 255, 255, 0.85);
+            margin: 0;
+            font-weight: 500;
+            max-width: 90%;
+        }
+
+        @media (min-width: 800px) {
+            .fucamp-eb-desc {
+                font-size: 18px;
+            }
+        }
+
+        .fucamp-eb-action {
+            margin-top: 32px;
+            flex-shrink: 0;
+        }
+
+        @media (min-width: 800px) {
+            .fucamp-eb-action {
+                margin-top: 0;
+                margin-left: 32px;
+            }
+        }
+
+        .fucamp-eb-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            background: #ff972e; /* Màu cam nútCTA */
+            color: #fff;
+            text-decoration: none;
+            padding: 16px 36px;
+            border-radius: 99px;
+            font-weight: 800;
+            font-size: 16px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 20px -5px rgba(255, 151, 46, 0.4);
+            border: 2px solid transparent;
+        }
+
+        /* Hover Nút */
+        .fucamp-embed-banner:hover .fucamp-eb-btn,
+        .fucamp-eb-btn:hover {
+            background: transparent;
+            color: #ff972e;
+            border-color: #ff972e;
+            transform: translateY(-2px);
+            box-shadow: 0 15px 25px -5px rgba(255, 151, 46, 0.2);
+        }
+
+        .fucamp-eb-btn svg {
+            width: 24px;
+            height: 24px;
+            fill: none;
+            stroke: currentColor;
+            stroke-width: 2.5;
+            transition: transform 0.3s ease;
+        }
+
+        .fucamp-embed-banner:hover .fucamp-eb-btn svg,
+        .fucamp-eb-btn:hover svg {
+            transform: translateX(6px);
+        }
+        /* Hết khối CSS Banner */
+
+    </style>
+</head>
+<body style="background: #e3eae1; padding: 40px; margin: 0; display: flex; align-items: center; justify-content: center; min-height: 100vh;">
+
+    <!-- Khối HTML của Banner - Copy phần này -->
+    <!-- Đổi URL href thành link website trại hè của bạn -->
+    <a href="code.html" class="fucamp-embed-banner">
+        <div class="fucamp-eb-bg">
+            <!-- Đổi dường dẫn ảnh theo web chính -->
+            <img src="img/img1.jpg" alt="Fucamp Lê Lợi">
+            <div class="fucamp-eb-overlay"></div>
+        </div>
+        <div class="fucamp-eb-content">
+            <div class="fucamp-eb-text">
+                <div class="fucamp-eb-badge">Khai Phát Tiềm Năng</div>
+                <h2 class="fucamp-eb-title">FUCAMP LÊ LỢI<br>Con bạn <span>phi thường</span> hơn bạn nghĩ!</h2>
+                <p class="fucamp-eb-desc">Hành trình 6 ngày khám phá bản thân, rèn luyện kỷ luật và tư duy tài chính thực chiến chuẩn quốc tế.</p>
+            </div>
+            <div class="fucamp-eb-action">
+                <div class="fucamp-eb-btn">
+                    Khám phá ngay
+                    <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </div>
+            </div>
+        </div>
+    </a>
+    <!-- Hết khối HTML Banner -->
+
+</body>
+</html>
