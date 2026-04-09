@@ -179,12 +179,29 @@
                     <div class="absolute inset-0 w-full h-full rounded-full bg-gradient-to-r from-primary to-tertiary-fixed opacity-70 group-hover:opacity-100 blur-md transition-opacity duration-300"></div>
                     <span class="relative bg-gradient-to-r from-primary to-primary-dim text-white px-7 py-2.5 rounded-full font-black text-sm uppercase tracking-wide group-hover:scale-105 transition-transform duration-300 border border-white/20">Tham gia ngay</span>
                 </a>
+                </a>
             </div>
-            <button class="md:hidden text-emerald-900 p-2">
-                <span class="material-symbols-outlined text-3xl">menu</span>
+            <button id="mobile-menu-btn" class="md:hidden text-emerald-900 p-2 z-[60] relative">
+                <span id="mobile-menu-icon" class="material-symbols-outlined text-3xl transition-transform duration-300">menu</span>
             </button>
         </div>
     </nav>
+    
+    <!-- Mobile Menu Dropdown -->
+    <div id="mobile-menu" class="fixed top-[88px] left-4 right-4 z-40 bg-white/95 backdrop-blur-3xl rounded-3xl shadow-2xl border border-white/50 transform origin-top scale-y-0 opacity-0 transition-all duration-300 md:hidden flex flex-col overflow-hidden pointer-events-none">
+        <div class="px-6 py-6 flex flex-col gap-5 text-center">
+            <a class="text-lg font-black text-emerald-950 active:text-primary mobile-menu-link" href="#journey">Lộ trình 6 ngày</a>
+            <div class="h-px bg-gradient-to-r from-transparent via-emerald-900/10 to-transparent w-full"></div>
+            <a class="text-lg font-black text-emerald-950 active:text-primary mobile-menu-link" href="#values">Giá trị huấn luyện</a>
+            <div class="h-px bg-gradient-to-r from-transparent via-emerald-900/10 to-transparent w-full"></div>
+            <a class="text-lg font-black text-emerald-950 active:text-primary mobile-menu-link" href="#pricing">Chi phí đầu tư</a>
+            <div class="mt-2 text-center w-full">
+                <a class="inline-block w-full px-6 py-4 bg-gradient-to-r from-primary to-primary-dim text-white rounded-2xl font-black text-lg shadow-xl shadow-primary/20 mobile-menu-link" href="#register">
+                    GIỮ CHỖ NGAY
+                </a>
+            </div>
+        </div>
+    </div>
     <!-- Hero Section -->
     <section class="relative min-h-[100dvh] flex items-center justify-center overflow-hidden">
         <div class="absolute inset-0 z-0">
@@ -216,12 +233,14 @@
                 </a>
             </div>
         </div>
-        <div class="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce opacity-70">
-            <span class="material-symbols-outlined text-white text-4xl">keyboard_double_arrow_down</span>
+        <div class="absolute bottom-8 w-full flex justify-center opacity-70 pointer-events-none">
+            <div class="animate-bounce">
+                <span class="material-symbols-outlined text-white text-4xl drop-shadow-lg">keyboard_double_arrow_down</span>
+            </div>
         </div>
     </section>
     <!-- Difference Section -->
-    <section class="min-h-screen flex items-center py-24 bg-surface" id="difference">
+    <section class="py-16 md:py-24 bg-surface lg:min-h-screen lg:flex lg:items-center" id="difference">
         <div class="max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
             <div class="relative group">
                 <div
@@ -273,7 +292,7 @@
         </div>
     </section>
     <!-- Core Training Values Section -->
-    <section class="py-24 bg-surface-bright" id="core-values">
+    <section class="py-16 md:py-24 bg-surface-bright" id="core-values">
         <div class="max-w-7xl mx-auto px-6">
             <div class="text-center mb-16 reveal">
                 <span class="inline-block px-4 py-1.5 rounded-full bg-secondary-container/30 text-secondary-dim border border-secondary-container/50 mb-4 font-bold tracking-widest text-sm uppercase">Nền tảng</span>
@@ -334,9 +353,9 @@
         </div>
     </section>
     <!-- Values & Benefits Section -->
-    <section class="py-24 bg-surface-container-lowest overflow-hidden" id="values-benefits">
+    <section class="py-16 md:py-24 bg-surface-container-lowest overflow-hidden" id="values-benefits">
         <div class="max-w-7xl mx-auto px-6">
-            <div class="text-center mb-20 reveal">
+            <div class="text-center mb-12 md:mb-20 reveal">
                 <h2 class="text-4xl md:text-6xl font-black text-on-surface mb-6">Tại sao nên chọn FUCAMP LÊ LỢI?</h2>
                 <div class="w-24 h-1.5 bg-primary mx-auto mb-10"></div>
             </div>
@@ -409,7 +428,7 @@
                 </div>
             </div>
             <!-- Card 5: Vượt qua giới hạn (Full Width) -->
-            <div class="mb-24 reveal">
+            <div class="mb-16 md:mb-24 reveal">
                 <div
                     class="relative overflow-hidden rounded-[40px] bg-gradient-to-br from-primary to-primary-dim p-12 text-on-primary shadow-2xl">
                     <div class="absolute top-0 right-0 p-12 opacity-10">
@@ -420,10 +439,10 @@
                         <p class="text-xl opacity-90 leading-relaxed mb-8">Con sẽ được rèn luyện để bước ra khỏi vùng an
                             toàn, hình thành thói quen kỷ luật tự giác và tinh thần quyết liệt hành động mỗi ngày để đạt
                             được mục tiêu.</p>
-                        <div class="flex gap-4">
-                            <span class="px-6 py-2 bg-white/20 rounded-full font-bold text-sm">#BảnLĩnh</span>
-                            <span class="px-6 py-2 bg-white/20 rounded-full font-bold text-sm">#KỷLuật</span>
-                            <span class="px-6 py-2 bg-white/20 rounded-full font-bold text-sm">#HànhĐộng</span>
+                        <div class="flex flex-wrap gap-3 md:gap-4">
+                            <span class="px-4 md:px-6 py-2 bg-white/20 rounded-full font-bold text-sm">#BảnLĩnh</span>
+                            <span class="px-4 md:px-6 py-2 bg-white/20 rounded-full font-bold text-sm">#KỷLuật</span>
+                            <span class="px-4 md:px-6 py-2 bg-white/20 rounded-full font-bold text-sm">#HànhĐộng</span>
                         </div>
                     </div>
                 </div>
@@ -466,9 +485,9 @@
         </div>
     </section>
     <!-- 6-Day Journey Timeline -->
-    <section class="py-24 bg-surface-container-low overflow-hidden" id="journey">
+    <section class="py-16 md:py-24 bg-surface-container-low overflow-hidden" id="journey">
         <div class="max-w-7xl mx-auto px-6">
-            <div class="text-center mb-20 reveal">
+            <div class="text-center mb-12 md:mb-20 reveal">
                 <h2 class="text-4xl md:text-6xl font-black text-on-surface mb-4">Hành Trình 6 Ngày Rực Rỡ</h2>
                 <p class="text-on-surface-variant text-lg">Mỗi ngày là một bước ngoặt trong sự trưởng thành của con</p>
             </div>
@@ -726,7 +745,7 @@
         </div>
     </section>
     <!-- Pricing Section -->
-    <section class="py-24 bg-surface-container-lowest" id="pricing">
+    <section class="py-16 md:py-24 bg-surface-container-lowest" id="pricing">
         <div class="max-w-4xl mx-auto px-6 reveal">
             <div class="text-center mb-16">
                 <span class="inline-block px-4 py-1.5 rounded-full bg-primary/10 text-primary border border-primary/20 mb-4 font-bold tracking-widest text-sm uppercase">Đầu tư xứng đáng</span>
@@ -784,7 +803,7 @@
         </div>
     </section>
     <!-- Registration Form Section -->
-    <section class="py-24 bg-white relative" id="register">
+    <section class="py-16 md:py-24 bg-white relative" id="register">
         <div class="max-w-5xl mx-auto px-6">
             <div class="bg-surface-container-low rounded-[48px] overflow-hidden shadow-2xl flex flex-col lg:flex-row">
                 <div class="lg:w-1/2 p-12 bg-primary text-on-primary flex flex-col justify-center">
@@ -797,7 +816,7 @@
                             <span class="font-bold text-lg uppercase tracking-wider">Ưu đãi giới hạn</span>
                         </div>
                         <p class="text-3xl font-black text-secondary-container">CHỈ CÒN 50 SUẤT</p>
-                        <p class="mt-2 text-sm opacity-80">Ưu tiên đăng ký trước ngày 15/05/2024</p>
+                        <p class="mt-2 text-sm opacity-80">Ưu tiên đăng ký trước ngày 15/05/2026</p>
                     </div>
                 </div>
                 <div class="lg:w-1/2 p-12 bg-white">
@@ -872,9 +891,61 @@
             </div>
         </div>
         <div class="max-w-7xl mx-auto px-8 py-8 border-t border-white/5 text-center text-emerald-100/40 text-sm">
-            © 2024 FUCAMP LÊ LỢI. All rights reserved.
+            © 2026 FUCAMP LÊ LỢI. All rights reserved.
         </div>
     </footer>
+
+    <!-- Floating Registration Button -->
+    <!-- Floating Registration Button -->
+    <div class="fixed bottom-8 right-8 z-[90] animate-bounce">
+        <button onclick="openRegistrationModal()" class="bg-gradient-to-r from-[#ff972e] to-red-500 text-white w-16 h-16 rounded-full shadow-[0_0_20px_rgba(255,151,46,0.6)] flex items-center justify-center hover:scale-110 transition-transform group">
+            <span class="material-symbols-outlined text-3xl font-black group-hover:rotate-12 transition-transform">edit_document</span>
+            <span class="absolute right-full mr-4 bg-white text-on-surface font-bold px-4 py-2 rounded-xl whitespace-nowrap shadow-lg opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none border border-outline-variant/20">
+                Đăng Ký Giữ Chỗ
+                <div class="absolute top-1/2 -right-1.5 w-3 h-3 bg-white border-r border-t border-outline-variant/20 transform rotate-45 -translate-y-1/2"></div>
+            </span>
+        </button>
+    </div>
+
+    <!-- Registration Modal Overlay -->
+    <div id="registrationModal" class="fixed inset-0 z-[100] flex items-center justify-center pointer-events-none opacity-0 transition-opacity duration-300 bg-black/80 p-4 md:p-8">
+        <!-- Modal Content -->
+        <div id="registrationModalContent" class="bg-white rounded-3xl lg:rounded-[32px] overflow-x-hidden overflow-y-auto max-h-[95vh] shadow-2xl max-w-4xl w-full flex flex-col md:flex-row transform scale-95 transition-all duration-500 relative">
+            <button onclick="closeRegistrationModal()" class="absolute top-3 right-3 md:top-4 md:right-4 z-50 w-10 h-10 bg-black/10 text-on-surface hover:bg-red-500 hover:text-white rounded-full flex items-center justify-center transition-colors">
+                <span class="material-symbols-outlined font-black">close</span>
+            </button>
+            <div class="w-full md:w-5/12 p-6 md:p-12 shrink-0 bg-gradient-to-br from-primary to-primary-dim text-white flex flex-col justify-center relative overflow-hidden">
+                 <div class="absolute inset-0 bg-[url('img/ngay1.jpg')] bg-cover bg-center opacity-10"></div>
+                 <div class="relative z-10 pt-4 md:pt-0">
+                     <span class="inline-block px-3 py-1 md:px-4 md:py-1.5 bg-white/20 rounded-full text-xs md:text-sm font-bold mb-3 md:mb-6 border border-white/30 backdrop-blur-md shadow-sm">⚡ Đăng Ký Nhận Tư Vấn</span>
+                     <h2 class="text-2xl md:text-3xl lg:text-4xl font-black mb-2 md:mb-4 leading-tight">CHỈ CÒN <span class="text-tertiary-fixed">50 SUẤT</span></h2>
+                     <p class="text-sm md:text-base lg:text-lg opacity-90 mt-2 md:mt-0 font-medium hidden md:block">Đăng ký ngay để nhận ưu đãi đặc biệt hỗ trợ 100% chi phí chuyên gia tâm lý và huấn luyện viên cho bé.</p>
+                 </div>
+            </div>
+            <div class="w-full md:w-7/12 p-6 md:p-10 bg-surface-container-lowest">
+                <div class="hidden md:block">
+                    <h3 class="text-2xl font-black text-on-surface mb-2">Đăng Ký Khóa Hè</h3>
+                    <p class="text-on-surface-variant font-medium mb-6">Hãy để lại thông tin, chúng tôi sẽ liên hệ trong 24h.</p>
+                </div>
+                <form action="#" class="space-y-4 md:space-y-5" method="POST">
+                    <div>
+                        <input class="w-full px-4 py-3 md:px-5 md:py-4 bg-surface-container rounded-2xl border-none focus:ring-2 focus:ring-primary transition-all text-on-surface text-sm md:text-base font-medium placeholder:text-on-surface-variant/60" placeholder="Họ tên phụ huynh *" required type="text" />
+                    </div>
+                    <div>
+                        <input class="w-full px-4 py-3 md:px-5 md:py-4 bg-surface-container rounded-2xl border-none focus:ring-2 focus:ring-primary transition-all text-on-surface text-sm md:text-base font-medium placeholder:text-on-surface-variant/60" placeholder="Số điện thoại di động *" required type="tel" />
+                    </div>
+                    <div>
+                        <input class="w-full px-4 py-3 md:px-5 md:py-4 bg-surface-container rounded-2xl border-none focus:ring-2 focus:ring-primary transition-all text-on-surface text-sm md:text-base font-medium placeholder:text-on-surface-variant/60" placeholder="Họ tên & Tuổi của con *" required type="text" />
+                    </div>
+                    <button class="w-full py-4 mt-2 md:mt-4 bg-gradient-to-r from-secondary to-tertiary text-white rounded-2xl font-black text-lg md:text-xl hover:scale-[1.02] transition-transform shadow-xl shadow-secondary/20 flex items-center justify-center gap-2" type="submit">
+                        NHẬN TƯ VẤN <span class="material-symbols-outlined">arrow_forward</span>
+                    </button>
+                    <p class="text-center text-xs text-on-surface-variant mt-2">Thông tin của bạn được bảo mật tuyệt đối.</p>
+                </form>
+            </div>
+        </div>
+    </div>
+
     <script>
         // Setup Intersection Observer for reveal animations
         const observerOptions = {
@@ -891,6 +962,46 @@
         }, observerOptions);
 
         document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .reveal-scale').forEach(el => observer.observe(el));
+
+        // Mobile Menu Toggle Logic
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenuIcon = document.getElementById('mobile-menu-icon');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const navbarLayoutBase = document.querySelector('#navbar > div');
+        let isMobileMenuOpen = false;
+
+        function toggleMobileMenu() {
+            isMobileMenuOpen = !isMobileMenuOpen;
+            if (isMobileMenuOpen) {
+                mobileMenu.classList.remove('scale-y-0', 'opacity-0', 'pointer-events-none');
+                mobileMenu.classList.add('scale-y-100', 'opacity-100', 'pointer-events-auto');
+                mobileMenuIcon.textContent = 'close';
+                mobileMenuIcon.style.transform = 'rotate(90deg)';
+                if (window.scrollY < 50) {
+                    navbarLayoutBase.classList.remove('mt-4', 'rounded-full', 'glass');
+                    navbarLayoutBase.classList.add('mt-0', 'rounded-b-2xl', 'bg-white/95', 'backdrop-blur-xl', 'shadow-md');
+                }
+            } else {
+                mobileMenu.classList.remove('scale-y-100', 'opacity-100', 'pointer-events-auto');
+                mobileMenu.classList.add('scale-y-0', 'opacity-0', 'pointer-events-none');
+                mobileMenuIcon.textContent = 'menu';
+                mobileMenuIcon.style.transform = 'rotate(0deg)';
+                if (window.scrollY < 50) {
+                    navbarLayoutBase.classList.add('mt-4', 'rounded-full', 'glass');
+                    navbarLayoutBase.classList.remove('mt-0', 'rounded-b-2xl', 'bg-white/95', 'backdrop-blur-xl', 'shadow-md');
+                }
+            }
+        }
+
+        if (mobileMenuBtn) {
+            mobileMenuBtn.addEventListener('click', toggleMobileMenu);
+        }
+
+        document.querySelectorAll('.mobile-menu-link').forEach(link => {
+            link.addEventListener('click', () => {
+                if (isMobileMenuOpen) toggleMobileMenu();
+            });
+        });
 
         // Parallax, Navbar, and Flow scroll logic
         const navbarLayout = document.querySelector('#navbar > div');
@@ -948,6 +1059,51 @@
                 if(el.tagName !== 'IMG' && !el.classList.contains('absolute')){
                     el.classList.add('hover-lift');
                 }
+            });
+            
+            // Modal Logic
+            const regModal = document.getElementById('registrationModal');
+            const regModalContent = document.getElementById('registrationModalContent');
+            let modalTriggered = false;
+
+            window.openRegistrationModal = function() {
+                if(regModal) {
+                    regModal.classList.remove('opacity-0', 'pointer-events-none');
+                    regModalContent.classList.remove('scale-95');
+                    regModalContent.classList.add('scale-100');
+                }
+            }
+
+            window.closeRegistrationModal = function() {
+                if(regModal) {
+                    regModal.classList.add('opacity-0', 'pointer-events-none');
+                    regModalContent.classList.remove('scale-100');
+                    regModalContent.classList.add('scale-95');
+                }
+            }
+
+            // Auto popup logic after 1s on load
+            setTimeout(() => {
+                if(!modalTriggered) {
+                    openRegistrationModal();
+                    modalTriggered = true;
+                }
+            }, 1000);
+
+            // Scroll trigger for modal
+            window.addEventListener('scroll', () => {
+                if(!modalTriggered && window.scrollY > (document.documentElement.scrollHeight * 0.45)) {
+                    openRegistrationModal();
+                    modalTriggered = true;
+                }
+            });
+
+            // Intercept CTA buttons pointing to #register
+            document.querySelectorAll('a[href="#register"]').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    openRegistrationModal();
+                });
             });
         });
     </script>
