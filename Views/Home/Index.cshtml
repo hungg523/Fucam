@@ -464,8 +464,20 @@
                             CỦA TRẠI HÈ<br />
                             FUCAMP LÊ LỢI
                         </h2>
-                        <p class="text-lg text-white/80 mb-10 font-medium">Chúng tôi không chỉ dạy kiến thức, chúng tôi
-                            kiến tạo môi trường để con tự mình trải nghiệm và trưởng thành.</p>
+                        <div class="mt-4 relative rounded-3xl overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.5)] border-[4px] border-white/10 transform transition-transform duration-500 hover:scale-[1.01] hover:border-white/20 group/video z-20">
+                            <!-- Subtle Glow behind video -->
+                            <div class="absolute -inset-4 bg-primary/20 blur-xl rounded-[40px] -z-10 group-hover/video:bg-primary/40 transition-colors duration-500"></div>
+                            
+                            <video 
+                                class="w-full h-auto aspect-video object-cover" 
+                                controls 
+                                preload="metadata"
+                                poster="img/about-intro.jpg"
+                            >
+                                <source src="video/difference-highlight.mp4" type="video/mp4" />
+                                Trình duyệt của bạn không hỗ trợ video, vui lòng tải video về máy để xem.
+                            </video>
+                        </div>
                     </div>
                     <div class="lg:col-span-7 grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div
