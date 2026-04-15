@@ -22,7 +22,7 @@ namespace Fucam.Controllers
 
         [HttpGet("")]
         [Authorize]
-        public IActionResult Index(string searchString, int page = 1)
+        public IActionResult Index(string searchString, string dateFrom, string dateTo, int? statusFilter, int page = 1)
         {
             // === THỐNG KÊ QUAN TRỌNG (CHART) ===
             var last7Days = Enumerable.Range(0, 7).Select(i => DateTime.Today.AddDays(-i)).Reverse().ToList();
@@ -39,11 +39,14 @@ namespace Fucam.Controllers
             ViewBag.ChartCounts = string.Join(",", chartCounts);
             ViewBag.GlobalTotal = _context.Registrations.Count();
             ViewBag.TodayTotal = _context.Registrations.Count(r => r.CreatedAt.Date == DateTime.Today);
+            ViewBag.ContactedTotal = _context.Registrations.Count(r => r.Status == 1);
+            ViewBag.NotContactedTotal = _context.Registrations.Count(r => r.Status == 0);
             // ===================================
 
             int pageSize = 10;
             var query = _context.Registrations.AsQueryable();
 
+            // Lọc theo từ khóa
             if (!string.IsNullOrEmpty(searchString))
             {
                 var search = searchString.ToLower();
@@ -52,6 +55,24 @@ namespace Fucam.Controllers
                     (r.PhoneNumber != null && r.PhoneNumber.Contains(search)) || 
                     (r.Email != null && r.Email.ToLower().Contains(search)) || 
                     (r.ChildInfo != null && r.ChildInfo.ToLower().Contains(search)));
+            }
+
+            // Lọc theo ngày bắt đầu
+            if (!string.IsNullOrEmpty(dateFrom) && DateTime.TryParse(dateFrom, out var fromDate))
+            {
+                query = query.Where(r => r.CreatedAt.Date >= fromDate.Date);
+            }
+
+            // Lọc theo ngày kết thúc
+            if (!string.IsNullOrEmpty(dateTo) && DateTime.TryParse(dateTo, out var toDate))
+            {
+                query = query.Where(r => r.CreatedAt.Date <= toDate.Date);
+            }
+
+            // Lọc theo trạng thái
+            if (statusFilter.HasValue && statusFilter.Value >= 0)
+            {
+                query = query.Where(r => r.Status == statusFilter.Value);
             }
 
             query = query.OrderByDescending(r => r.CreatedAt);
@@ -67,6 +88,9 @@ namespace Fucam.Controllers
             ViewBag.CurrentPage = page;
             ViewBag.TotalPages = totalPages;
             ViewBag.SearchString = searchString;
+            ViewBag.DateFrom = dateFrom;
+            ViewBag.DateTo = dateTo;
+            ViewBag.StatusFilter = statusFilter;
             ViewBag.TotalRecords = totalRecords;
 
             return View(registrations);
@@ -124,20 +148,21 @@ namespace Fucam.Controllers
         public IActionResult ToggleStatus(int id, [FromBody] ToggleStatusRequest req)
         {
             var reg = _context.Registrations.Find(id);
-            if (reg != null)
+            if (reg == null)
+                return Json(new { success = false, message = "Không tìm thấy bản ghi." });
+
+            if (reg.Status == 1)
+                return Json(new { success = false, message = "Bản ghi đã được đánh dấu liên hệ, không thể hoàn tác." });
+
+            reg.Status = 1;
+            
+            if (req != null && !string.IsNullOrWhiteSpace(req.Note))
             {
-                var curStatus = reg.Status;
-                reg.Status = curStatus == 0 ? 1 : 0;
-                
-                if (reg.Status == 1 && req != null && !string.IsNullOrWhiteSpace(req.Note))
-                {
-                    reg.Notes = req.Note;
-                }
-                
-                _context.SaveChanges();
-                return Json(new { success = true, newStatus = reg.Status, newNote = reg.Notes });
+                reg.Notes = req.Note;
             }
-            return Json(new { success = false });
+            
+            _context.SaveChanges();
+            return Json(new { success = true, newStatus = reg.Status, newNote = reg.Notes });
         }
 
         [HttpGet("logout")]
