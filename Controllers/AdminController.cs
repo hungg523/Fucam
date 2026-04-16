@@ -12,12 +12,9 @@ namespace Fucam.Controllers
     public class AdminController : Controller
     {
         private readonly ApplicationDbContext _context;
-        private readonly PasswordHasher<AdminUser> _passwordHasher;
-
         public AdminController(ApplicationDbContext context)
         {
             _context = context;
-            _passwordHasher = new PasswordHasher<AdminUser>();
         }
 
         [HttpGet("")]
@@ -114,8 +111,7 @@ namespace Fucam.Controllers
                 var user = _context.AdminUsers.FirstOrDefault(u => u.Username == model.Username);
                 if (user != null)
                 {
-                    var result = _passwordHasher.VerifyHashedPassword(user, user.PasswordHash, model.Password);
-                    if (result == PasswordVerificationResult.Success)
+                    if (user.PasswordHash == Fucam.Helpers.HashHelper.ComputeMD5(model.Password))
                     {
                         var claims = new List<Claim>
                         {
