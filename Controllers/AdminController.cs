@@ -160,6 +160,19 @@ namespace Fucam.Controllers
             _context.SaveChanges();
             return Json(new { success = true, newStatus = reg.Status, newNote = reg.Notes });
         }
+        [HttpDelete("delete-registration/{id}")]
+        [Authorize]
+        public IActionResult DeleteRegistration(int id)
+        {
+            var reg = _context.Registrations.Find(id);
+            if (reg == null)
+                return Json(new { success = false, message = "Không tìm thấy bản ghi." });
+
+            _context.Registrations.Remove(reg);
+            _context.SaveChanges();
+            
+            return Json(new { success = true });
+        }
 
         [HttpGet("logout")]
         public async Task<IActionResult> Logout()

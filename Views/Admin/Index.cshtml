@@ -30,10 +30,10 @@
     <!-- Sidebar -->
     <aside id="sidebar" class="fixed lg:relative w-64 bg-slate-900 h-full flex flex-col text-white z-50 -translate-x-full lg:translate-x-0 shrink-0">
         <div class="p-6 pb-2 border-b border-slate-800 flex flex-col">
-            <div class="text-2xl font-black text-amber-500 tracking-wide flex items-center gap-3">
+            <a href="/" target="_blank" title="Xem trang web tải tab mới" class="text-2xl font-black text-amber-500 tracking-wide flex items-center gap-3 hover:scale-[1.02] transition-transform">
                 <img src="/img/logo.png" alt="Fucamp Lê Lợi" class="h-9 object-contain brightness-0 invert drop-shadow-[0_2px_4px_rgba(0,0,0,0.4)]" />
                 FUCAMP
-            </div>
+            </a>
             <div class="text-[11px] text-slate-400 font-bold tracking-widest mt-2 uppercase ml-12">Quản trị hệ thống</div>
         </div>
         <nav class="flex-1 p-4 space-y-2 overflow-y-auto">
@@ -185,6 +185,7 @@
                                 <th class="py-4 px-6 font-semibold min-w-[200px]">Họ tên & Tuổi của con</th>
                                 <th class="py-4 px-6 font-semibold min-w-[150px]">Ghi chú</th>
                                 <th class="py-4 px-6 font-semibold whitespace-nowrap text-center">Trạng thái</th>
+                                <th class="py-4 px-6 font-semibold whitespace-nowrap text-center">Thao tác</th>
                             </tr>
                         </thead>
                         <tbody class="text-sm">
@@ -239,13 +240,18 @@
                                                 </button>
                                             }
                                         </td>
+                                        <td class="py-4 px-6 text-center">
+                                            <button onclick="deleteContact(@item.Id, this)" class="w-8 h-8 inline-flex items-center justify-center rounded-lg bg-slate-100 text-slate-500 hover:bg-rose-100 hover:text-rose-600 transition" title="Xóa">
+                                                <span class="material-symbols-outlined text-[18px]">delete</span>
+                                            </button>
+                                        </td>
                                     </tr>
                                 }
                             }
                             else
                             {
                                 <tr>
-                                    <td colspan="7" class="py-12 text-center text-slate-500 flex-col items-center">
+                                    <td colspan="8" class="py-12 text-center text-slate-500 flex-col items-center">
                                         <span class="material-symbols-outlined text-4xl text-slate-300 mb-2 block">inbox</span>
                                         Không tìm thấy dữ liệu đăng ký nào.
                                     </td>
@@ -356,7 +362,9 @@
                 showCancelButton: true,
                 confirmButtonText: 'Xác nhận đã liên hệ',
                 cancelButtonText: 'Hủy',
-                confirmButtonColor: '#10b981'
+                confirmButtonColor: '#10b981',
+                heightAuto: false,
+                scrollbarPadding: false
             }).then((result) => {
                 if (result.isConfirmed) {
                     btnElement.innerHTML = '<span class="material-symbols-outlined text-sm animate-spin">refresh</span> <span>Đang lưu...</span>';
@@ -397,6 +405,54 @@
                     })
                     .catch(err => {
                         btnElement.innerHTML = '<span class="material-symbols-outlined text-sm">pending_actions</span> <span class="status-text">Chưa LH</span>';
+                        btnElement.disabled = false;
+                        Swal.fire({ icon: 'error', title: 'Lỗi kết nối', text: 'Vui lòng kiểm tra lại mạng.' });
+                    });
+                }
+            });
+        }
+
+        function deleteContact(id, btnElement) {
+            Swal.fire({
+                title: 'Bạn có chắc chắn muốn xóa?',
+                text: "Hành động này không thể hoàn tác!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#ef4444',
+                cancelButtonColor: '#94a3b8',
+                confirmButtonText: 'Đồng ý xóa',
+                cancelButtonText: 'Hủy',
+                heightAuto: false,
+                scrollbarPadding: false
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    btnElement.innerHTML = '<span class="material-symbols-outlined text-sm animate-spin">refresh</span>';
+                    btnElement.disabled = true;
+
+                    fetch('/quan-tri/delete-registration/' + id, {
+                        method: 'DELETE',
+                        headers: { 'Content-Type': 'application/json' }
+                    })
+                    .then(res => res.json())
+                    .then(data => {
+                        if(data.success === true || data.Success === true) {
+                            var tr = btnElement.closest('tr');
+                            tr.style.opacity = '0';
+                            setTimeout(() => {
+                                tr.remove();
+                            }, 300);
+                            Swal.mixin({
+                                toast: true, position: 'top-end', showConfirmButton: false, timer: 2000, 
+                                timerProgressBar: true
+                            }).fire({ icon: 'success', title: 'Xóa thành công!' });
+                        } else {
+                            btnElement.innerHTML = '<span class="material-symbols-outlined text-[18px]">delete</span>';
+                            btnElement.disabled = false;
+                            Swal.fire({ icon: 'error', title: 'Lỗi', text: data.message || data.Message || 'Không thể xóa bản ghi!' });
+                        }
+                    })
+                    .catch(err => {
+                        btnElement.innerHTML = '<span class="material-symbols-outlined text-[18px]">delete</span>';
                         btnElement.disabled = false;
                         Swal.fire({ icon: 'error', title: 'Lỗi kết nối', text: 'Vui lòng kiểm tra lại mạng.' });
                     });
