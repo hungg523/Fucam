@@ -139,6 +139,25 @@ namespace Fucam.Controllers
             public string? Note { get; set; }
         }
 
+        public class UpdateNoteRequest
+        {
+            public string? Note { get; set; }
+        }
+
+        [HttpPost("update-note/{id}")]
+        [Authorize]
+        public IActionResult UpdateNote(int id, [FromBody] UpdateNoteRequest req)
+        {
+            var reg = _context.Registrations.Find(id);
+            if (reg == null)
+                return Json(new { success = false, message = "Không tìm thấy bản ghi." });
+
+            reg.Notes = req?.Note;
+            _context.SaveChanges();
+            
+            return Json(new { success = true, newNote = reg.Notes });
+        }
+
         [HttpPost("toggle-status/{id}")]
         [Authorize]
         public IActionResult ToggleStatus(int id, [FromBody] ToggleStatusRequest req)
@@ -160,7 +179,7 @@ namespace Fucam.Controllers
             _context.SaveChanges();
             return Json(new { success = true, newStatus = reg.Status, newNote = reg.Notes });
         }
-        [HttpDelete("delete-registration/{id}")]
+        [HttpPost("delete-registration/{id}")]
         [Authorize]
         public IActionResult DeleteRegistration(int id)
         {

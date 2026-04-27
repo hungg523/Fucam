@@ -134,13 +134,7 @@
                 }
             }
 
-            // Modal Scroll Logic
-            if (window.modalTriggered === false && scrollY > (document.documentElement.scrollHeight * 0.45)) {
-                if (window.openRegistrationModal) {
-                    window.openRegistrationModal();
-                    window.modalTriggered = true;
-                }
-            }
+
 
             ticking = false;
         }
@@ -244,13 +238,7 @@
                 }
             }
 
-            // Auto popup logic after 1s on load
-            setTimeout(() => {
-                if (!window.modalTriggered) {
-                    window.openRegistrationModal();
-                    window.modalTriggered = true;
-                }
-            }, 1000);
+
 
             // Intercept CTA buttons pointing to #register
             document.querySelectorAll('a[href="#register"]').forEach(btn => {

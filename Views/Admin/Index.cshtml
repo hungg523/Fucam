@@ -219,7 +219,7 @@
                                                 @item.ChildInfo
                                             </div>
                                         </td>
-                                        <td class="py-4 px-6 text-slate-600 text-sm max-w-[200px] break-words" id="note-col-@item.Id">
+                                        <td class="py-4 px-6 text-slate-600 text-sm max-w-[200px] break-words" id="note-col-@item.Id" data-note="@item.Notes">
                                             @if(!string.IsNullOrEmpty(item.Notes))
                                             {
                                                 <span class="italic">@item.Notes</span>
@@ -241,9 +241,14 @@
                                             }
                                         </td>
                                         <td class="py-4 px-6 text-center">
-                                            <button onclick="deleteContact(@item.Id, this)" class="w-8 h-8 inline-flex items-center justify-center rounded-lg bg-slate-100 text-slate-500 hover:bg-rose-100 hover:text-rose-600 transition" title="Xóa">
-                                                <span class="material-symbols-outlined text-[18px]">delete</span>
-                                            </button>
+                                            <div class="flex justify-center gap-2">
+                                                <button onclick="editNote(@item.Id)" class="w-8 h-8 inline-flex items-center justify-center rounded-lg bg-slate-100 text-slate-500 hover:bg-blue-100 hover:text-blue-600 transition" title="Sửa ghi chú">
+                                                    <span class="material-symbols-outlined text-[18px]">edit_note</span>
+                                                </button>
+                                                <button onclick="deleteContact(@item.Id, this)" class="w-8 h-8 inline-flex items-center justify-center rounded-lg bg-slate-100 text-slate-500 hover:bg-rose-100 hover:text-rose-600 transition" title="Xóa">
+                                                    <span class="material-symbols-outlined text-[18px]">delete</span>
+                                                </button>
+                                            </div>
                                         </td>
                                     </tr>
                                 }
@@ -389,7 +394,10 @@
                             var noteData = data.newNote !== undefined ? data.newNote : data.NewNote;
                             if(noteData) {
                                 var nc = document.getElementById('note-col-' + id);
-                                if(nc) nc.innerHTML = '<span class="italic">' + noteData + '</span>';
+                                if(nc) {
+                                    nc.innerHTML = '<span class="italic">' + noteData + '</span>';
+                                    nc.setAttribute('data-note', noteData);
+                                }
                             }
 
                             Swal.mixin({
@@ -406,6 +414,56 @@
                     .catch(err => {
                         btnElement.innerHTML = '<span class="material-symbols-outlined text-sm">pending_actions</span> <span class="status-text">Chưa LH</span>';
                         btnElement.disabled = false;
+                        Swal.fire({ icon: 'error', title: 'Lỗi kết nối', text: 'Vui lòng kiểm tra lại mạng.' });
+                    });
+                }
+            });
+        }
+
+        function editNote(id) {
+            var col = document.getElementById('note-col-' + id);
+            var currentNote = col.getAttribute('data-note') || '';
+            
+            Swal.fire({
+                title: 'Sửa ghi chú',
+                input: 'textarea',
+                inputLabel: 'Nội dung ghi chú',
+                inputValue: currentNote,
+                showCancelButton: true,
+                confirmButtonText: 'Lưu',
+                cancelButtonText: 'Hủy',
+                confirmButtonColor: '#3b82f6',
+                heightAuto: false,
+                scrollbarPadding: false
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    var newNote = result.value || "";
+                    
+                    fetch('/quan-tri/update-note/' + id, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ note: newNote })
+                    })
+                    .then(res => res.json())
+                    .then(data => {
+                        if(data.success === true || data.Success === true) {
+                            var updatedNote = data.newNote !== undefined ? data.newNote : data.NewNote;
+                            col.setAttribute('data-note', updatedNote || '');
+                            if(updatedNote) {
+                                col.innerHTML = '<span class="italic">' + updatedNote + '</span>';
+                            } else {
+                                col.innerHTML = '<span class="text-slate-300">--</span>';
+                            }
+
+                            Swal.mixin({
+                                toast: true, position: 'top-end', showConfirmButton: false, timer: 2000, 
+                                timerProgressBar: true
+                            }).fire({ icon: 'success', title: 'Cập nhật ghi chú thành công!' });
+                        } else {
+                            Swal.fire({ icon: 'error', title: 'Lỗi', text: data.message || data.Message || 'Không thể cập nhật ghi chú!' });
+                        }
+                    })
+                    .catch(err => {
                         Swal.fire({ icon: 'error', title: 'Lỗi kết nối', text: 'Vui lòng kiểm tra lại mạng.' });
                     });
                 }
@@ -430,7 +488,7 @@
                     btnElement.disabled = true;
 
                     fetch('/quan-tri/delete-registration/' + id, {
-                        method: 'DELETE',
+                        method: 'POST',
                         headers: { 'Content-Type': 'application/json' }
                     })
                     .then(res => res.json())
